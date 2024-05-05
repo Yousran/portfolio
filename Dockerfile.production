@@ -16,10 +16,15 @@ RUN a2enmod rewrite headers
 
 # 5. Composer.
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Change ownership of the storage and cache directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Modify permissions to ensure proper access
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # 6. We need a user with the same UID/GID as the host user
 # so when we execute CLI commands, all the host file's permissions and ownership remain intact.
 # Otherwise commands from inside the container would create root-owned files and directories.
-ARG uid=1000
-RUN useradd -G www-data,root -u 1000 -d /home/devuser devuser
+RUN useradd -G www-data,root -u 0 -d /home/devuser devuser
 RUN mkdir -p /home/devuser/.composer && \
     chown -R devuser:devuser /home/devuser
