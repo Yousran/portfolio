@@ -43,8 +43,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PRODUCTION_SERVER_HOST }}
-          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: sembarang12
 
   update-docker-compose-and-restart-containers:
     runs-on: ubuntu-latest
