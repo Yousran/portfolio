@@ -12,7 +12,8 @@
                 "bmewburn.vscode-intelephense-client",
                 "onecentlin.laravel-blade",
                 "amiralizadeh9480.laravel-extra-intellisense",
-                "formulahendry.vscode-mysql"
+                "formulahendry.vscode-mysql",
+                "github.vscode-github-actions"
             ],
             "settings": {
                 "workbench.colorTheme": "One Dark Pro"
