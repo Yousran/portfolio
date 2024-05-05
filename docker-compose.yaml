@@ -3,8 +3,9 @@
       build:
         context: .
         dockerfile: Dockerfile.production
+      image: yousranmz/portfolio_web:latest
       volumes:
-        -  .:/app
+        - .:/app
       ports:
         - "8080:8181"
       depends_on:
