@@ -1,0 +1,22 @@
+{
+    "name": "Portfolio Yousranmz",
+    "dockerComposeFile": "../compose-dev.yaml",
+    "service": "web",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "adpyke.codesnap",
+                "mhutchie.git-graph",
+                "zhuangtongfa.material-theme",
+                "bmewburn.vscode-intelephense-client",
+                "onecentlin.laravel-blade",
+                "amiralizadeh9480.laravel-extra-intellisense",
+                "formulahendry.vscode-mysql"
+            ],
+            "settings": {
+                "workbench.colorTheme": "One Dark Pro"
+            }
+        }
+      }
+}
