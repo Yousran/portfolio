@@ -1,14 +1,23 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WorkController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/')->name('dashboard.')->controller(DashboardController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
 });
-Route::get('/works', [WorkController::class, 'index'])->name('works.index')->middleware('auth.session');
-Route::post('/works/store', [WorkController::class, 'store'])->name('works.store');
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::prefix('works')->name('works.')->controller(WorkController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/store', 'store')->name('store');
+});
+Route::controller(LoginController::class)->group(function () {
+    Route::get('login', 'showLoginForm')->name('login');
+    Route::get('dd', function(){
+        return dd(session());
+    })->name('dd');
+    Route::post('login', 'login');
+    Route::post('logout', 'logout')->name('logout');
+});

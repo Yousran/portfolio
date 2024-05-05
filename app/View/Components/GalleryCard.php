@@ -8,14 +8,19 @@ use Illuminate\View\Component;
 
 class GalleryCard extends Component
 {
-    public $title, $desc, $link, $photo;
+    public $title;
+    public $desc;
+    public $link;
+    public $photo;
+    public $categoryIcon;
 
-    public function __construct($title, $desc, $link, $photo)
+    public function __construct($title, $desc, $link, $photo, $categoryIcon)
     {
         $this->title = $title;
         $this->desc = $desc;
         $this->link = $link;
         $this->photo = $photo;
+        $this->categoryIcon = $categoryIcon;
     }
 
     public function render()

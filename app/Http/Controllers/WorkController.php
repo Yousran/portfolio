@@ -23,7 +23,6 @@ class WorkController extends Controller
         $work->category_id = $request->category_id;  // Pastikan ini ditetapkan
         $work->desc = $request->desc;
         $work->link = $request->link;
-        $work->photo = isset($path) ? $path : null;
         $work->show = isset($request->show) ? '1' : '0';
         
         
@@ -41,7 +40,6 @@ class WorkController extends Controller
         } else {
             Log::warning('No file selected or file upload failed.');
         }        
-        $work->save();
         
         if ($work->save()) {
             Log::info('Work created successfully', ['id' => $work->id]);

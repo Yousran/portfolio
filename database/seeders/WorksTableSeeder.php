@@ -34,7 +34,7 @@ class WorksTableSeeder extends Seeder
             ],
             [
                 'title' => 'Project 1',
-                'category_id' => 1,  // Pastikan ID kategori ini ada di tabel categories
+                'category_id' => 4,  // Pastikan ID kategori ini ada di tabel categories
                 'desc' => 'Description for Project 1',
                 'link' => 'http://example.com',
                 'photo' => 'card.jpg',
