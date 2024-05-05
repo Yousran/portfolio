@@ -14,7 +14,7 @@
 
 </head>
 <body class="bg-primary">
-    <a href="index.html" class="position-absolute mt-3 mx-3" style="top: 0; left:0;">
+    <a href="{{ route('dashboard.index') }}" class="position-absolute mt-3 mx-3" style="top: 0; left:0;">
         <i class='bx bx-left-arrow-alt text-light fs-1 bx-tada-hover'></i>
     </a>
     <div class="d-flex justify-content-center p-5">
