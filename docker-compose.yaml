@@ -2,6 +2,8 @@
     web:
       build:
         context: .
+        args:
+          uid: ${UID}
         dockerfile: Dockerfile.production
       image: yousranmz/portfolio_web:latest
       volumes:
