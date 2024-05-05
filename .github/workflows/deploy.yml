@@ -25,9 +25,11 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PRODUCTION_SERVER_HOST }}
-          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: sembarang12
           script: |
             cd /opt/web-portfolio
             docker-compose -f docker-compose.yml pull
             docker-compose -f docker-compose.yml up -d
+
