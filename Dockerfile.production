@@ -1,11 +1,25 @@
 FROM php:8.3-apache
 
-RUN apt-get update -y && apt-get install -y openssl zip unzip git libonig-dev
+RUN apt-get update -y && apt-get install -y openssl zip unzip git libonig-dev sudo
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN docker-php-ext-install pdo mbstring
-WORKDIR /app
-COPY . /app
-RUN composer install
+WORKDIR /var/www/html
+COPY . /var/www/html
 RUN docker-php-ext-install pdo_mysql
 
-CMD apachectl -D FOREGROUND
+# Apache configurations and setting document root
+RUN echo "ServerName laravel-app.local" >> /etc/apache2/apache2.conf
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN a2enmod rewrite headers
+
+# 5. Composer.
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Change ownership of the storage and cache directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Modify permissions to ensure proper access
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN sudo chmod -R a+rw storage
