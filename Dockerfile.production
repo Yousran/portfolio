@@ -23,8 +23,8 @@ RUN a2enmod ssl
 RUN a2ensite default-ssl
 RUN mkdir -p /etc/apache2/ssl
 # You need to add your SSL certificates in your project directory under 'certs'
-COPY ./certs/fullchain.pem /etc/apache2/ssl/server.crt
-COPY ./certs/privkey.pem /etc/apache2/ssl/server.key
+COPY /certs/fullchain.pem /etc/apache2/ssl/server.crt
+COPY /certs/privkey.pem /etc/apache2/ssl/server.key
 RUN sed -i 's!SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem!SSLCertificateFile /etc/apache2/ssl/server.crt!' /etc/apache2/sites-available/default-ssl.conf
 RUN sed -i 's!SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key!SSLCertificateKeyFile /etc/apache2/ssl/server.key!' /etc/apache2/sites-available/default-ssl.conf
 
