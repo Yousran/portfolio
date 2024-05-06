@@ -11,6 +11,8 @@ Route::prefix('/')->name('dashboard.')->controller(DashboardController::class)->
 });
 Route::prefix('works')->name('works.')->controller(WorkController::class)->group(function () {
     Route::get('/', 'index')->name('index');
+    Route::get('/admin', 'indexadmin')->name('indexAdmin');
+    Route::post('/toggle/{id}', 'editShow')->name('editShow');
     Route::post('/store', 'store')->name('store');
 });
 Route::controller(LoginController::class)->group(function () {

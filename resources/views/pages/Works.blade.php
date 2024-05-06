@@ -1,6 +1,7 @@
 @extends('layouts.Works')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/masonry.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('contents')
@@ -67,7 +68,7 @@
         </div>   
     @endauth 
     @forelse ($works as $work)
-        <x-gallery-card :title="$work->title" :desc="$work->desc" :link="$work->link" :photo="$work->photo" :categoryIcon="$work->category->category_icon" />
+        <x-gallery-card :id="$work->id" :title="$work->title" :desc="$work->desc" :link="$work->link" :photo="$work->photo" :show="$work->show" :categoryIcon="$work->category->category_icon" />
     @empty
         <p>No works found.</p>
     @endforelse

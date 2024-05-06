@@ -14,6 +14,20 @@ class WorkController extends Controller
         $categories = WorkCategory::all();
         return view('pages.Works', ['works' => $works,'categories' => $categories]);
     }
+    public function indexAdmin() {
+        $works = Work::with('category')->get();
+        $categories = WorkCategory::all();
+        return view('pages.Works', ['works' => $works,'categories' => $categories]);
+    }
+
+    public function editShow($id, Request $request) {
+        $work = Work::findOrFail($id);
+        $work->show = $request->show;
+        $work->save();
+    
+        return response()->json(['success' => true]);
+    }
+    
 
 
     public function store(Request $request)

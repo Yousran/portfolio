@@ -6,7 +6,14 @@
         <div class="w-100 mx-auto profilpic d-flex justify-content-center align-items-center" style="min-height: 30vh;">
             <object data="{{ asset('source/LOGO_YUSRAN.svg') }}" style="width: 30%; height: auto;" type="image/svg+xml"></object>
             <div class="popup w-100">
-                <a href="{{ route('works.index') }}"><div class="btn btn-outline-light mt-3">Works</div></a>
+                @if (auth()->check())
+                    <!-- Pengguna telah login -->
+                    <a href="{{ route('works.indexAdmin') }}"><div class="btn btn-outline-light mt-3">Works</div></a>
+                @else
+                    <!-- Pengguna belum login -->
+                    <a href="{{ route('works.index') }}"><div class="btn btn-outline-light mt-3">Works</div></a>
+                @endif
+
                 <a href="{{ url('educations.html') }}"><div class="btn btn-outline-light mt-3">Educations</div></a>
                 <a href="{{ url('experience.html') }}"><div class="btn btn-outline-light mt-3">Job Experience</div></a>
             </div>
