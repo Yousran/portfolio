@@ -1,27 +1,33 @@
-  services:
-    web:
-      build:
-        context: .
-        dockerfile: Dockerfile.production
-      image: yousranmz/portfolio_web:latest
-      volumes:
-        - .:/var/www/html
-      ports:
-        - "80:80"
-      depends_on:
-        - db
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    image: yousranmz/portfolio_web:latest
+    volumes:
+      - .:/var/www/html
+      - ssl:/etc/apache2/ssl/
+      - certs:/etc/letsencrypt/live/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - db
 
-    db:
-      image: mysql:8.3
-      environment:
-        MYSQL_ROOT_PASSWORD: secret
-        MYSQL_DATABASE: laravel
-        MYSQL_USER: laravel
-        MYSQL_PASSWORD: secret
-      volumes:
-        - dbdata:/var/lib/mysql
-      ports:
-        - "3306:3306"
+  db:
+    image: mysql:8.3
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
-  volumes:
-    dbdata:
+volumes:
+  dbdata:
+  ssl:
+  certs:
