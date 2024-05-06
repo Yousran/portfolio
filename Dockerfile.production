@@ -1,21 +1,33 @@
 FROM php:8.3-apache
 
+# Install dependencies
 RUN apt-get update -y && apt-get install -y openssl zip unzip git libonig-dev sudo
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN docker-php-ext-install pdo mbstring
+RUN docker-php-ext-install pdo mbstring pdo_mysql
+
+# Copy composer and install dependencies
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . /var/www/html
-RUN docker-php-ext-install pdo_mysql
+RUN composer install
 
 # Apache configurations and setting document root
-RUN echo "ServerName laravel-app.local" >> /etc/apache2/apache2.conf
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN echo "ServerName laravel-app.local" >> /etc/apache2/apache2.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 RUN a2enmod rewrite headers
 
-# 5. Composer.
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install
+# Setup Apache to run with SSL
+RUN a2enmod ssl
+RUN a2ensite default-ssl
+RUN mkdir -p /etc/apache2/ssl
+# You need to add your SSL certificates in your project directory under 'certs'
+COPY ./certs/fullchain.pem /etc/apache2/ssl/server.crt
+COPY ./certs/privkey.pem /etc/apache2/ssl/server.key
+RUN sed -i 's!SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem!SSLCertificateFile /etc/apache2/ssl/server.crt!' /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i 's!SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key!SSLCertificateKeyFile /etc/apache2/ssl/server.key!' /etc/apache2/sites-available/default-ssl.conf
 
+# Correct permissions for Laravel
 RUN sudo chmod -R a+rw storage
+RUN sudo chmod -R a+rw public/img
