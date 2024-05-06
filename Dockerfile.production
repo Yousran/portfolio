@@ -21,3 +21,4 @@ RUN a2enmod rewrite headers
 # Correct permissions for Laravel
 RUN sudo chmod -R a+rw storage
 RUN sudo chmod -R a+rw public/img
+RUN sudo chmod -R 777 /var/www/html/public/img

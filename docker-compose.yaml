@@ -7,7 +7,7 @@ services:
     image: yousranmz/portfolio_web:latest
     volumes:
       - .:/var/www/html
-      - ssl:/etc/apache2/ssl/
+      - ssl:/etc/apache2/
       - certs:/etc/letsencrypt/live/
     ports:
       - "80:80"
