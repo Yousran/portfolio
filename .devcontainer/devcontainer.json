@@ -12,8 +12,11 @@
                 "bmewburn.vscode-intelephense-client",
                 "onecentlin.laravel-blade",
                 "amiralizadeh9480.laravel-extra-intellisense",
-                "formulahendry.vscode-mysql",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "cweijan.vscode-mysql-client2",
+                "austenc.laravel-blade-spacer",
+                "codingyu.laravel-goto-view",
+                "AnbuselvanRocky.bootstrap5-vscode"
             ],
             "settings": {
                 "workbench.colorTheme": "One Dark Pro"
