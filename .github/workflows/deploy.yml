@@ -37,5 +37,7 @@ jobs:
           passphrase: sembarang12
           script: |
             cd /opt/web-portfolio
+            git pull origin production
+            php artisan migrate --seed
             docker-compose -f docker-compose.yaml pull
             docker-compose -f docker-compose.yaml up -d
