@@ -18,18 +18,6 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 RUN a2enmod rewrite headers
 
-# Setup Apache to run with SSL
-RUN a2enmod ssl
-RUN a2ensite default-ssl
-RUN mkdir -p /etc/apache2/ssl
-# You need to add your SSL certificates in your project directory under 'certs'
-COPY /certs/fullchain.pem /etc/apache2/ssl/server.crt
-COPY /certs/privkey.pem /etc/apache2/ssl/server.key
-RUN chown www-data:www-data /etc/apache2/ssl/server.crt /etc/apache2/ssl/server.key
-RUN chmod 600 /etc/apache2/ssl/server.crt /etc/apache2/ssl/server.key
-RUN sed -i 's!SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem!SSLCertificateFile /etc/apache2/ssl/server.crt!' /etc/apache2/sites-available/default-ssl.conf
-RUN sed -i 's!SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key!SSLCertificateKeyFile /etc/apache2/ssl/server.key!' /etc/apache2/sites-available/default-ssl.conf
-
 # Correct permissions for Laravel
 RUN sudo chmod -R a+rw storage
 RUN sudo chmod -R a+rw public/img
