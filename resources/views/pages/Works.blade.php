@@ -11,10 +11,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addWorkModalLabel">Add New Work</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>                
                 <div class="modal-body">
                     <form id="addWorkForm" action="{{ route('works.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -46,7 +44,7 @@
                             <label for="show">Show</label>
                             <input class="form-check-input" type="checkbox" name="show">
                         </div>
-                    </form>
+                    </form>                                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -75,17 +73,4 @@
 
 </div>
 @endsection
-
-@push('scripts')
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      var masonryGrid = document.querySelector('.row');
-      var msnry = new Masonry(masonryGrid, {
-          itemSelector: '.card',
-          percentPosition: true,
-          columnWidth: '.card'
-      });
-  });
-</script>
-@endpush
 

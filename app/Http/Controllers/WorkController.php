@@ -28,33 +28,34 @@ class WorkController extends Controller
         return response()->json(['success' => true]);
     }
     
+    public function store(Request $request){
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:work_categories,id',
+            'desc' => 'nullable|string',
+            'link' => 'nullable|url',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp,bmp,ico|max:2048',  // Add additional image formats
+            'show' => 'nullable|boolean'
+        ]);
 
-
-    public function store(Request $request)
-    {
         $work = new Work;
         $work->title = $request->title;
-        $work->category_id = $request->category_id;  // Pastikan ini ditetapkan
+        $work->category_id = $request->category_id;
         $work->desc = $request->desc;
         $work->link = $request->link;
         $work->show = isset($request->show) ? '1' : '0';
-        
-        
+
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('/img'); 
-        
+            $destinationPath = public_path('/img');
             $file->move($destinationPath, $filename);
-        
             $work->photo = $filename;
-            $work->save();
-        
             Log::info('Photo added successfully: ' . $work->photo);
         } else {
             Log::warning('No file selected or file upload failed.');
-        }        
-        
+        }
+
         if ($work->save()) {
             Log::info('Work created successfully', ['id' => $work->id]);
             return redirect()->route('works.index')->with('success', 'Work added successfully.');
@@ -63,7 +64,4 @@ class WorkController extends Controller
             return back()->with('error', 'Failed to add work');
         }
     }
-
-
 }
-
