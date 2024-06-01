@@ -9,17 +9,19 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->name('dashboard.')->controller(DashboardController::class)->group(function () {
     Route::get('/', 'index')->name('index');
 });
+
 Route::prefix('works')->name('works.')->controller(WorkController::class)->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/admin', 'indexadmin')->name('indexAdmin');
-    Route::post('/toggle/{id}', 'editShow')->name('editShow');
-    Route::post('/store', 'store')->name('store');
+    Route::get('/admin', 'indexAdmin')->name('indexAdmin')->middleware('auth');  // Protect admin route
+    Route::post('/toggle/{id}', 'editShow')->name('editShow')->middleware('auth');  // Protect toggle route
+    Route::post('/store', 'store')->name('store')->middleware('auth');  // Protect store route
 });
+
 Route::controller(LoginController::class)->group(function () {
     Route::get('login', 'showLoginForm')->name('login');
+    Route::post('login', 'login');
+    Route::post('logout', 'logout')->name('logout');
     Route::get('dd', function(){
         return dd(session());
     })->name('dd');
-    Route::post('login', 'login');
-    Route::post('logout', 'logout')->name('logout');
 });

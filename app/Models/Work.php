@@ -9,7 +9,7 @@ class Work extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
-    protected $fillable = ['title', 'category', 'desc', 'link', 'photo', 'show'];
+    protected $fillable = ['title', 'category_id', 'desc', 'link', 'photo', 'show'];
 
     public function category()
     {
