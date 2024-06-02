@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +12,25 @@ Route::prefix('/')->name('dashboard.')->controller(DashboardController::class)->
     Route::get('/', 'index')->name('index');
 });
 
+Route::prefix('educations')->name('educations.')->controller(EducationController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/admin', 'indexAdmin')->name('indexAdmin')->middleware('auth');
+    Route::post('/', 'store')->name('store')->middleware('auth');
+    Route::post('/toggle/{id}', 'editShow')->name('editShow')->middleware('auth');
+});
+
+Route::prefix('experiences')->name('experiences.')->controller(ExperienceController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/admin', 'indexAdmin')->name('indexAdmin')->middleware('auth');
+    Route::post('/', 'store')->name('store')->middleware('auth');
+    Route::post('/toggle/{id}', 'editShow')->name('editShow')->middleware('auth');
+});
+
 Route::prefix('works')->name('works.')->controller(WorkController::class)->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/admin', 'indexAdmin')->name('indexAdmin')->middleware('auth');  // Protect admin route
-    Route::post('/toggle/{id}', 'editShow')->name('editShow')->middleware('auth');  // Protect toggle route
-    Route::post('/store', 'store')->name('store')->middleware('auth');  // Protect store route
+    Route::get('/admin', 'indexAdmin')->name('indexAdmin')->middleware('auth');
+    Route::post('/toggle/{id}', 'editShow')->name('editShow')->middleware('auth');
+    Route::post('/store', 'store')->name('store')->middleware('auth');
 });
 
 Route::controller(LoginController::class)->group(function () {

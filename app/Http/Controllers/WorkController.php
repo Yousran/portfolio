@@ -43,7 +43,7 @@ class WorkController extends Controller
         $work->category_id = $request->category_id;
         $work->desc = $request->desc;
         $work->link = $request->link;
-        $work->show = isset($request->show) ? '1' : '0';
+        $work->show = $request->input('show') === '1' ? 1 : 0;
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -58,7 +58,7 @@ class WorkController extends Controller
 
         if ($work->save()) {
             Log::info('Work created successfully', ['id' => $work->id]);
-            return redirect()->route('works.index')->with('success', 'Work added successfully.');
+            return redirect()->route('works.indexAdmin')->with('success', 'Work added successfully.');
         } else {
             Log::warning('Failed to create work');
             return back()->with('error', 'Failed to add work');

@@ -42,7 +42,7 @@
                         </div>
                         <div class="form-group">
                             <label for="show">Show</label>
-                            <input class="form-check-input" type="checkbox" name="show">
+                            <input class="form-check-input" type="checkbox" id="show" name="show" value="1" checked>
                         </div>
                     </form>                                   
                 </div>
