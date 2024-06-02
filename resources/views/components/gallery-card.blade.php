@@ -23,7 +23,7 @@
   .toggle-icon {
     cursor: pointer;
     position:absolute;
-    top: calc(0rem - 1rem); /* Mengurangi padding top 10px dari parent */
+    top: calc(0rem - 1rem);
     left: calc(0rem - 1rem);
     z-index: 2;
   }

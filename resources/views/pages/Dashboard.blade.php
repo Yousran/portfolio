@@ -7,14 +7,16 @@
             <object data="{{ asset('source/LOGO_YUSRAN.svg') }}" style="width: 30%; height: auto;" type="image/svg+xml"></object>
             <div class="popup w-100">
                 @if (auth()->check())
-                    <!-- Pengguna telah login -->
                     <a href="{{ route('works.indexAdmin') }}"><div class="btn btn-outline-light mt-3">Works</div></a>
                 @else
-                    <!-- Pengguna belum login -->
                     <a href="{{ route('works.index') }}"><div class="btn btn-outline-light mt-3">Works</div></a>
                 @endif
 
-                <a href="{{ url('educations.html') }}"><div class="btn btn-outline-light mt-3">Educations</div></a>
+                @if (auth()->check())
+                    <a href="{{ route('educations.indexAdmin') }}"><div class="btn btn-outline-light mt-3">Educations</div></a>
+                @else
+                    <a href="{{ route('educations.index') }}"><div class="btn btn-outline-light mt-3">Educations</div></a>
+                @endif
                 <a href="{{ url('experience.html') }}"><div class="btn btn-outline-light mt-3">Job Experience</div></a>
             </div>
         </div>
@@ -22,7 +24,7 @@
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yusranmazidan@gmail.com" target="_blank" class="mx-2">
                 <i class='bx bx-envelope text-light fs-1 bx-tada-hover'></i>
             </a>
-            <a href="https://wa.me/085156378360" target="_blank" class="mx-2">
+            <a href="https://wa.me/+6285156378360" target="_blank" class="mx-2">
                 <i class='bx bxl-whatsapp text-light fs-1 bx-tada-hover'></i>
             </a>
             <a href="https://www.linkedin.com/in/yousranmz/" target="_blank" class="mx-2">
