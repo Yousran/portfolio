@@ -17,7 +17,12 @@
                 @else
                     <a href="{{ route('educations.index') }}"><div class="btn btn-outline-light mt-3">Educations</div></a>
                 @endif
-                <a href="{{ url('experience.html') }}"><div class="btn btn-outline-light mt-3">Job Experience</div></a>
+
+                @if (auth()->check())
+                    <a href="{{ route('experiences.indexAdmin') }}"><div class="btn btn-outline-light mt-3">Job Experience</div></a>
+                @else
+                    <a href="{{ route('experiences.index') }}"><div class="btn btn-outline-light mt-3">Job Experience</div></a>
+                @endif
             </div>
         </div>
         <div class="mt-3 d-flex justify-content-center">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Education;
+use Illuminate\Support\Facades\Log;
 
 class EducationController extends Controller
 {
@@ -20,26 +21,39 @@ class EducationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|string|max:255',
             'time' => 'required',
-            'desc' => 'nullable|max:65535',
+            'desc' => 'required|string|max:65535',
             'link' => 'nullable|url',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp,bmp,ico|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp,bmp,ico|max:2048',
             'show' => 'nullable|boolean'
         ]);
 
-        $photoPath = $request->file('photo')->store('photos', 'public');
+        $education = new Education;
+        $education->title = $request->title;
+        $education->time = $request->time;
+        $education->desc = $request->desc;
+        $education->link = $request->link;
+        $education->show = $request->input('show') === '1' ? 1 : 0;
 
-        Education::create([
-            'title' => $request->title,
-            'time' => $request->time,
-            'desc' => $request->desc,
-            'link' => $request->link,
-            'photo' => $photoPath,
-            'show' => $request->has('show')
-        ]);
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('/img');
+            $file->move($destinationPath, $filename);
+            $education->photo = $filename;
+            Log::info('Photo added successfully: ' . $education->photo);
+        } else {
+            Log::warning('No file selected or file upload failed.');
+        }
 
-        return redirect()->route('educations.index')->with('success', 'Education added successfully.');
+        if ($education->save()) {
+            Log::info('Education created successfully', ['id' => $education->id]);
+            return redirect()->route('educations.indexAdmin')->with('success', 'Education added successfully.');
+        } else {
+            Log::warning('Failed to create education');
+            return back()->with('error', 'Failed to add education');
+        }
     }
 
     public function editShow($id, Request $request) {

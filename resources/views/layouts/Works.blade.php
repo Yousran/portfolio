@@ -90,20 +90,15 @@
                     required: true
                 },
                 desc: {
-                    required: false,
                     maxlength: 65535
                 },
                 link: {
-                    required: false,
                     url: true
                 },
                 photo: {
                     required: true,
                     accept: "image/jpeg,image/png,image/jpg,image/gif,image/svg+xml,image/webp,image/bmp,image/x-icon",
-                    filesize: 2048000 // 2MB
-                },
-                show: {
-                    required: false
+                    filesize: 2048000
                 }
             },
             messages: {
@@ -123,7 +118,7 @@
                 }
             },
             submitHandler: function(form) {
-                $(form).submit();
+                form.submit();
             }
         });
     });

@@ -2,19 +2,19 @@
 @section('contents')
     <div class="p-3" style="min-height: 100vh;">
         <div class="d-flex justify-content-center">
-            <h1 class="text-light">Educations</h1>
+            <h1 class="text-light">Experiences</h1>
         </div>
 
         @auth
-            <div class="modal fade" id="addEducationModal" tabindex="-1" aria-labelledby="addEducationModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addEducationModalLabel">Add New Education</h5>
+                            <h5 class="modal-title" id="addExperienceModalLabel">Add New Experience</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="addEducationForm" action="{{ route('educations.store') }}" method="POST" enctype="multipart/form-data">
+                            <form id="addExperienceForm" action="{{ route('experiences.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -39,12 +39,12 @@
                                 <div class="form-group">
                                     <label for="show">Show</label>
                                     <input class="form-check-input" type="checkbox" id="show" name="show" value="1" checked>
-                                </div>                             
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="addEducationForm" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" form="addExperienceForm" class="btn btn-primary">Save Changes</button>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                 <li class="timeline-inverted">
                     <div class="timeline-badge bg-light"></div>
                     <div class="timeline-panel">
-                        <div class="card bg-primary border-light text-light shadow-sm" data-bs-toggle="modal" data-bs-target="#addEducationModal"
+                        <div class="card bg-primary border-light text-light shadow-sm" data-bs-toggle="modal" data-bs-target="#addExperienceModal"
                             style="transition: opacity 0.3s ease; opacity: 1;"
                             onmouseover="this.style.opacity=0.7;"
                             onmouseout="this.style.opacity=1;">
@@ -70,20 +70,19 @@
                 </li>
             @endauth
 
-            @foreach($educations as $education)
+            @foreach($experiences as $experience)
                 <x-timeline-card 
-                    id="{{ $education->id }}" 
-                    title="{{ $education->title }}" 
-                    timeline="{{ $education->time }}" 
-                    desc="{{ $education->desc }}" 
-                    photo="{{ $education->photo }}" 
-                    link="{{ $education->link }}" 
-                    show="{{ $education->show }}"
+                    id="{{ $experience->id }}" 
+                    title="{{ $experience->title }}" 
+                    timeline="{{ $experience->time }}" 
+                    desc="{{ $experience->desc }}" 
+                    photo="{{ $experience->photo }}" 
+                    link="{{ $experience->link }}" 
+                    show="{{ $experience->show }}"
                     :inverted="$loop->iteration % 2 == 0" />
             @endforeach
         </ul>
     </div>
-
 @endsection
 
 @auth
@@ -100,7 +99,7 @@
     @endsection
     @push('scripts')
     <script>
-        function toggleVisibility(element, educationId) {
+        function toggleVisibility(element, experienceId) {
             var icon = element.querySelector('.toggleIcon');
             var currentValue = icon.classList.contains('bx-hide');
             var card = element.closest('.card');
@@ -115,7 +114,7 @@
             }
 
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/educations/toggle/" + educationId, true);
+            xhr.open("POST", "/experiences/toggle/" + experienceId, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken.getAttribute('content'));
             xhr.send(JSON.stringify({
@@ -141,7 +140,7 @@
                 return this.optional(element) || (size <= param);
             }, 'File size must be less than {0} bytes.');
 
-            $('#addEducationForm').validate({
+            $('#addExperienceForm').validate({
                 errorClass: 'is-invalid',
                 validClass: 'is-valid',
                 errorElement: 'div',
@@ -173,6 +172,9 @@
                     photo: {
                         accept: "image/jpeg,image/png,image/jpg,image/gif,image/svg+xml,image/webp,image/bmp,image/x-icon",
                         filesize: 2048000 // 2MB
+                    },
+                    show: {
+                        required: false
                     }
                 },
                 messages: {
