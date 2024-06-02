@@ -10,9 +10,17 @@
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loading.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mainpage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/background-star.css') }}">
     <title>{{ $page_title ?? 'Default Title' }}</title>
 </head>
 <body class="bg-primary">
+    <div class="background">
+        <div class="stars">
+            @for ($i = 0; $i < 15; $i++)
+                <div class="star"></div>
+            @endfor
+        </div>
+    </div>
     @yield('contents')
 
     <script src="{{ asset('js/bootstrap.js') }}"></script>

@@ -5,7 +5,7 @@
     @else
         <div class="timeline-panel">
     @endif
-            <div class="card bg-primary border-light text-light shadow-sm" style="opacity: {{ $show ? '1' : '0.5' }}; transition: opacity 0.3s;">
+            <div class="card bg-transparent border-light text-light shadow-sm" style="opacity: {{ $show ? '1' : '0.5' }}; transition: opacity 0.3s;">
                 <div class="row">
                     @if ($photo)
                         <div class="col-md-4 d-flex align-items-center">

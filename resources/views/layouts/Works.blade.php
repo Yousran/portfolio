@@ -7,10 +7,18 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/background-star.css') }}">
     @yield('styles')
     <title>{{ $page_title ?? 'Default Title' }}</title>
 </head>
 <body class="bg-primary">
+    <div class="background">
+        <div class="stars">
+            @for ($i = 0; $i < 15; $i++)
+                <div class="star"></div>
+            @endfor
+        </div>
+    </div>
     <a href="{{ route('dashboard.index') }}" class="position-absolute mt-3 mx-3" style="top: 0; left:0;">
         <i class='bx bx-left-arrow-alt text-light fs-1 bx-tada-hover'></i>
     </a>
