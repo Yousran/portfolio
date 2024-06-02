@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="mt-3 d-flex justify-content-center">
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yusranmazidan@gmail.com" target="_blank" class="mx-2">
+            <a href="mailto:yusranmazidan@gmail.com" target="_blank" class="mx-2">
                 <i class='bx bx-envelope text-light fs-1 bx-tada-hover'></i>
             </a>
             <a href="https://wa.me/+6285156378360" target="_blank" class="mx-2">
