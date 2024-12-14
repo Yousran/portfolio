@@ -1,9 +1,21 @@
+// filepath: /home/yousranmz/portfolio/docker-compose.yml
 version: '3.8'
 
 services:
   app:
     build: .
     ports:
-      - "80:3000"
+      - "3000:3000"
     environment:
       NODE_ENV: production
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - app
