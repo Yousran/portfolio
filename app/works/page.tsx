@@ -13,9 +13,12 @@ import {
 
 const Page = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showHidden, setShowHidden] = useState(false);
 
   const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => setIsDialogOpen(false);
+
+  const toggleShowHidden = () => setShowHidden(!showHidden);
 
   return (
     <ContextMenu>
@@ -26,12 +29,12 @@ const Page = () => {
             starColor={[255, 255, 255]}
             speedFactor={0.03}
           />
-          <Works />
+          <Works showHidden={showHidden} />
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem onClick={handleOpenDialog}>Add Works</ContextMenuItem>
-        <ContextMenuItem>Show Hidden</ContextMenuItem>
+        <ContextMenuItem onClick={toggleShowHidden}>{showHidden ? 'Hide Hidden' : 'Show Hidden'}</ContextMenuItem>
       </ContextMenuContent>
       <CreateWorks open={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </ContextMenu>

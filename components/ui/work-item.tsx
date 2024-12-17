@@ -17,12 +17,14 @@ interface WorkItemProps {
     };
     title: string;
     link: string;
+    show: boolean;
   };
+  showHidden: boolean;
 }
 
-const WorkItem: React.FC<WorkItemProps> = ({ work }) => {
+const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(work.show);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleClick = () => {
@@ -33,9 +35,21 @@ const WorkItem: React.FC<WorkItemProps> = ({ work }) => {
     setIsEditOpen(true);
   };
 
-  const handleHideShow = (work: WorkItemProps['work']) => {
-    setIsVisible(!isVisible);
-    console.log(`${isVisible ? 'Hide' : 'Show'} clicked for work:`, work.title);
+  const handleHideShow = async (work: WorkItemProps['work']) => {
+    const newVisibility = !isVisible;
+    const response = await fetch(`/api/works/update-show?id=${work.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ show: newVisibility }),
+    });
+
+    if (response.ok) {
+      setIsVisible(newVisibility);
+    } else {
+      console.error('Failed to update show status:', await response.text());
+    }
   };
 
   useEffect(() => {
@@ -46,7 +60,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work }) => {
     };
   }, [work.File.path]);
 
-  if (!isVisible) return null;
+  if (!isVisible && !showHidden) return null;
 
   return (
     <>
@@ -54,7 +68,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work }) => {
         <ContextMenuTrigger>
           <div 
             key={work.id} 
-            className='relative h-fit cursor-pointer rounded-xl overflow-hidden' 
+            className={`relative h-fit cursor-pointer rounded-xl overflow-hidden ${!isVisible ? 'opacity-30' : ''}`} 
             onClick={handleClick}
           >
             {work.File && (

@@ -21,3 +21,8 @@ export default function Home() {
     </div>
   );
 }
+
+//TODO: navbar dengan tombol back dan toggle theme
+//TODO: authenticate and authorize user
+//TODO: urutan work item di masonry grid
+//TODO: education dan experience section
