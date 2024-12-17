@@ -20,7 +20,7 @@ const Page = () => {
   return (
     <ContextMenu>
       <ContextMenuTrigger>
-        <div className="h-screen w-screen flex justify-center items-center bg-primary-foreground">
+        <div className="h-screen flex justify-center items-center bg-primary-foreground">
           <Starfield
             starCount={500}
             starColor={[255, 255, 255]}

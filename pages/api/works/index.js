@@ -3,12 +3,18 @@ import File from '../../../models/file.js';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const { page = 1, limit = 5 } = req.query;
+    const offset = (page - 1) * limit;
+
     try {
       const works = await Work.findAll({
         include: [{
           model: File,
           as: 'File'
-        }]
+        }],
+        order: [['createdAt', 'DESC']],
+        limit: parseInt(limit, 10),
+        offset: parseInt(offset, 10),
       });
       res.status(200).json(works);
     } catch (error) {
