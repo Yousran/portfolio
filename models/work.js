@@ -8,7 +8,11 @@ Work.init({
   title: DataTypes.STRING,
   description: DataTypes.STRING,
   picture: DataTypes.INTEGER,
-  link: DataTypes.STRING
+  link: DataTypes.STRING,
+  show: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
 }, {
   sequelize,
   modelName: 'Work',

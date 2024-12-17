@@ -12,19 +12,19 @@ const InfiniteScrollArea = React.forwardRef<
   const [isAtBottom, setIsAtBottom] = React.useState(false);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
-  const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
-  if (scrollTop + clientHeight >= scrollHeight) {
-    setIsAtBottom(true);
-  } else {
-    setIsAtBottom(false);
-  }
-};
-
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+    // console.log('Scrolling...', { scrollTop, scrollHeight, clientHeight });
+    if (scrollTop + clientHeight >= (scrollHeight-1)) {
+      setIsAtBottom(true);
+    } else {
+      setIsAtBottom(false);
+    }
+  };
 
   React.useEffect(() => {
     if (isAtBottom && onBottomReached) {
+    //   console.log('Bottom reached');
       onBottomReached();
-
       setIsAtBottom(false);
     }
   }, [isAtBottom, onBottomReached]);

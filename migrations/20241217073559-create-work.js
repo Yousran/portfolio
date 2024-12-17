@@ -26,6 +26,10 @@ export async function up(queryInterface, Sequelize) {
     link: {
       type: Sequelize.STRING
     },
+    show: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE

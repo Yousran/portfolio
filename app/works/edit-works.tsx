@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,31 +13,25 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 
-const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+const EditWorks = ({ open, onOpenChange, work }: { open: boolean; onOpenChange: (open: boolean) => void; work: any }) => {
+  const [title, setTitle] = useState(work.title);
+  const [description, setDescription] = useState(work.description);
   const [picture, setPicture] = useState('');
-  const [link, setLink] = useState('');
-
+  const [link, setLink] = useState(work.link);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
-      // console.log('Selected file:', selectedFile.name);
-  
       const formData = new FormData();
       formData.append('file', selectedFile);
-  
-      // console.log('Uploading file:', selectedFile);
-  
+
       const uploadResponse = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (uploadResponse.ok) {
         const fileData = await uploadResponse.json();
-        // console.log('File uploaded successfully:', fileData);
         setPicture(fileData.id);
       } else {
         console.error('Failed to upload file:', await uploadResponse.text());
@@ -49,10 +43,9 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
     e.preventDefault();
 
     const requestBody = { title, description, picture, link };
-    // console.log('Submitting form with data:', requestBody);
 
-    const response = await fetch('/api/works/store', {
-      method: 'POST',
+    const response = await fetch(`/api/works/update?id=${work.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -60,7 +53,6 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
     });
 
     if (response.ok) {
-      // console.log('Form submitted successfully');
       setTitle('');
       setDescription('');
       setPicture('');
@@ -68,7 +60,7 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
       onOpenChange(false);
       window.location.reload();
     } else {
-      console.error('Failed to submit form:', await response.text());
+      console.error('Failed to update work:', await response.text());
     }
   };
 
@@ -76,9 +68,9 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add New Work</AlertDialogTitle>
+          <AlertDialogTitle>Edit Work</AlertDialogTitle>
           <AlertDialogDescription>
-            Please fill in the details for the new work.
+            Please update the details for the work.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <form onSubmit={handleSubmit}>
@@ -93,7 +85,7 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
             </div>
             <div>
               <Label htmlFor="file">Image</Label>
-              <Input id="file" type="file" onChange={handleFileChange} required />
+              <Input id="file" type="file" onChange={handleFileChange} />
             </div>
             <div>
               <Label htmlFor="link">Link</Label>
@@ -110,4 +102,4 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
   );
 };
 
-export default CreateWorks;
+export default EditWorks;
