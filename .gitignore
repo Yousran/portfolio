@@ -20,6 +20,7 @@
 # production
 /build
 database.sqlite
+/public/uploads
 
 # misc
 .DS_Store

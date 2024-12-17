@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 export async function up(queryInterface, Sequelize) {
-  await queryInterface.createTable('Contents', {
+  await queryInterface.createTable('Works', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -12,7 +12,19 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.STRING
     },
     description: {
-      type: Sequelize.TEXT
+      type: Sequelize.STRING
+    },
+    picture: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Files',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    },
+    link: {
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
@@ -25,5 +37,5 @@ export async function up(queryInterface, Sequelize) {
   });
 }
 export async function down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('Contents');
+  await queryInterface.dropTable('Works');
 }

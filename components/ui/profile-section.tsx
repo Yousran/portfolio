@@ -2,9 +2,14 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const ProfileSection = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
+  const handleWorksClick = () => {
+    router.push('/works');
+  };
 
   return (
     <div
@@ -34,7 +39,7 @@ const ProfileSection = () => {
         className="absolute w-full"
       >
         <div className="text-center flex flex-col gap-4 p-4">
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleWorksClick}>
             Works
           </Button>
           <Button variant="outline">
