@@ -22,5 +22,10 @@ export default function Home() {
   );
 }
 
+//TODO: experience section
+//TODO: change date datatype of education and experience
+//TODO: timeline component
+//TODO: education section
+//TODO: delete work
+//TODO: delete experience, dan education
 //TODO: urutan work item di masonry grid
-//TODO: education dan experience section

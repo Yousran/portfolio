@@ -10,6 +10,9 @@ const ProfileSection = () => {
   const handleWorksClick = () => {
     router.push('/works');
   };
+  const handleExperiencesClick = () => {
+    router.push('/experiences');
+  }
 
   return (
     <div
@@ -42,8 +45,8 @@ const ProfileSection = () => {
           <Button variant="outline" onClick={handleWorksClick}>
             Works
           </Button>
-          <Button variant="outline">
-            Experience
+          <Button variant="outline" onClick={handleExperiencesClick}>
+            Experiences
           </Button>
           <Button variant="outline">
             Educations
