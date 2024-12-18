@@ -20,6 +20,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import 'boxicons/css/boxicons.min.css'
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'sonner'
 
 const CreateEducation = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
     const [date, setDate] = useState<Date | null>(null);
@@ -44,7 +46,8 @@ const CreateEducation = ({ open, onOpenChange }: { open: boolean; onOpenChange: 
                 const fileData = await uploadResponse.json();
                 setPicture(fileData.id);
             } else {
-                console.error('Failed to upload file:', await uploadResponse.text());
+                toast.error('Failed to upload file');
+                // console.error('Failed to upload file:', await uploadResponse.text());
             }
         }
     };
@@ -80,7 +83,9 @@ const CreateEducation = ({ open, onOpenChange }: { open: boolean; onOpenChange: 
             onOpenChange(false);
             window.location.reload();
         } else {
-            console.error('Failed to submit form:', await response.text());
+            const error = await response.json();
+            toast.error(error.error);
+            // console.error('Failed to submit form:', await response.text());
         }
     };
 
@@ -145,6 +150,7 @@ const CreateEducation = ({ open, onOpenChange }: { open: boolean; onOpenChange: 
                     </AlertDialogFooter>
                 </form>
             </AlertDialogContent>
+            <Toaster position="bottom-right" />
         </AlertDialog>
     );
 };

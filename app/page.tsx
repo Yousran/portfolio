@@ -22,7 +22,6 @@ export default function Home() {
   );
 }
 
-//TODO: view error handling
 //TODO: api input validation
 
 //TODO: masonry grid orders

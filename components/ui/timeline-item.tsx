@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import EditTimelineItem from '@/components/ui/edit-timeline-item';
 import { 
     AlertDialog, 
-    AlertDialogTrigger, 
+    AlertDialogDescription,
     AlertDialogContent, 
     AlertDialogHeader, 
     AlertDialogFooter, 
@@ -21,6 +21,8 @@ import {
     AlertDialogAction, 
     AlertDialogTitle
 } from '@/components/ui/alert-dialog';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 
 interface ItemProps {
@@ -72,7 +74,9 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
         if (response.ok) {
             setIsVisible(newVisibility);
         } else {
-            console.error('Failed to update show status:', await response.text());
+            const error = await response.json();
+            toast.error(error.error);
+            // console.error('Failed to update show status:', await response.text());
         }
     };
 
@@ -87,7 +91,9 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
         if (response.ok) {
             window.location.reload();
         } else {
-            console.error('Failed to delete item:', await response.text());
+            const error = await response.json();
+            toast.error(error.error);
+            // console.error('Failed to delete item:', await response.text());
         }
     };
 
@@ -130,7 +136,9 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                                         </>
                                     )}
                                     <div>
-                                        <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(item.date, "dd-MMM-yyyy")}</time>
+                                        {item.date && (
+                                            <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(new Date(item.date), "dd-MMM-yyyy")}</time>
+                                        )}
                                         <h3 className="text-lg font-semibold text-primary overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
                                         <p className="mb-4 text-base font-normal text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>{item.description}</p>
                                         {item.link && (
@@ -172,7 +180,10 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                                 </>
                             )}
                             <div>
-                                <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(item.date, "dd-MMM-yyyy")}</time>
+                                {item.date && (
+                                    <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(new Date(item.date), "dd-MMM-yyyy")}</time>
+                                )}
+                                
                                 <h3 className="text-lg font-semibold text-primary overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
                                 <p className="mb-4 text-base font-normal text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>{item.description}</p>
                                 {item.link && (
@@ -203,6 +214,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you sure you want to delete this item?</AlertDialogTitle>
+                        <AlertDialogDescription>This action can't be undone</AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
@@ -210,6 +222,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+            <Toaster position="bottom-right" />
         </>
     );
 };

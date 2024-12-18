@@ -8,14 +8,16 @@ import {
 import EditWorks from '@/app/works/edit-works';
 import { 
   AlertDialog, 
-  AlertDialogTrigger, 
   AlertDialogContent, 
   AlertDialogHeader, 
   AlertDialogFooter, 
   AlertDialogCancel, 
   AlertDialogAction, 
-  AlertDialogTitle 
+  AlertDialogTitle, 
+  AlertDialogDescription
 } from '@/components/ui/alert-dialog';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 interface WorkItemProps {
   work: {
@@ -61,7 +63,9 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
     if (response.ok) {
       setIsVisible(newVisibility);
     } else {
-      console.error('Failed to update show status:', await response.text());
+      const error = await response.json();
+      toast.error(error.error);
+      // console.error('Failed to update show status:', await response.text());
     }
   };
 
@@ -76,7 +80,9 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
     if (response.ok) {
       window.location.reload();
     } else {
-      console.error('Failed to delete work:', await response.text());
+      const error = await response.json();
+      toast.error(error.error);
+      // console.error('Failed to delete work:', await response.text());
     }
   };
 
@@ -155,6 +161,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure you want to delete this work?</AlertDialogTitle>
+            <AlertDialogDescription>This action can't be undone</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
@@ -162,6 +169,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <Toaster position="bottom-right" />
     </>
   );
 };

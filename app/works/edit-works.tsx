@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'sonner'
 
 const EditWorks = ({ open, onOpenChange, work }: { open: boolean; onOpenChange: (open: boolean) => void; work: any }) => {
   const [title, setTitle] = useState(work.title);
@@ -34,7 +36,8 @@ const EditWorks = ({ open, onOpenChange, work }: { open: boolean; onOpenChange: 
         const fileData = await uploadResponse.json();
         setPicture(fileData.id);
       } else {
-        console.error('Failed to upload file:', await uploadResponse.text());
+        toast.error('Failed to upload file');
+        // console.error('Failed to upload file:', await uploadResponse.text());
       }
     }
   };
@@ -61,7 +64,9 @@ const EditWorks = ({ open, onOpenChange, work }: { open: boolean; onOpenChange: 
       onOpenChange(false);
       window.location.reload();
     } else {
-      console.error('Failed to update work:', await response.text());
+      const error = await response.json();
+      toast.error(error.error);
+      // console.error('Failed to update work:', await response.text());
     }
   };
 

@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'sonner'
 
 interface EditTimelineItemProps {
     open: boolean;
@@ -49,7 +51,8 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
                 const fileData = await uploadResponse.json();
                 setPicture(fileData.id);
             } else {
-                console.error('Failed to upload file:', await uploadResponse.text());
+                toast.error('Failed to upload file');
+                // console.error('Failed to upload file:', await uploadResponse.text());
             }
         }
     };
@@ -77,7 +80,9 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
             onOpenChange(false);
             window.location.reload();
         } else {
-            console.error('Failed to update item:', await response.text());
+            const error = await response.json();
+            toast.error(error.error);
+            // console.error('Failed to update item:', await response.text());
         }
     };
 
@@ -119,6 +124,7 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
                     </AlertDialogFooter>
                 </form>
             </AlertDialogContent>
+            <Toaster position="bottom-right" />
         </AlertDialog>
     );
 };

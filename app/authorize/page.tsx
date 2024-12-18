@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Starfield from 'react-starfield';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,13 @@ import { toast } from 'sonner';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token') || '');
+    }
+  }, []);
 
   const handleLogin = async () => {
     try {

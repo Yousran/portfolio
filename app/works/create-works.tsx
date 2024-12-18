@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
   const [title, setTitle] = useState('');
@@ -23,12 +25,9 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
-      // console.log('Selected file:', selectedFile.name);
   
       const formData = new FormData();
       formData.append('file', selectedFile);
-  
-      // console.log('Uploading file:', selectedFile);
   
       const uploadResponse = await fetch('/api/upload', {
         method: 'POST',
@@ -37,7 +36,6 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
   
       if (uploadResponse.ok) {
         const fileData = await uploadResponse.json();
-        // console.log('File uploaded successfully:', fileData);
         setPicture(fileData.id);
       } else {
         console.error('Failed to upload file:', await uploadResponse.text());
@@ -66,8 +64,12 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
       setLink('');
       onOpenChange(false);
       window.location.reload();
+      // toast.success('Work added successfully');
     } else {
-      console.error('Failed to submit form:', await response.text());
+      // console.error('Failed to submit form:', await response.text());
+      const error = await response.json();
+      //TODO: error message from api
+      toast.error(error.error);
     }
   };
 
@@ -105,6 +107,7 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
           </AlertDialogFooter>
         </form>
       </AlertDialogContent>
+      <Toaster position="bottom-right" />
     </AlertDialog>
   );
 };
