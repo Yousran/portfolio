@@ -38,7 +38,7 @@ const Works = ({ showHidden }: { showHidden:boolean }) => {
   }, [works]);
 
   return (
-<InfiniteScrollArea className='h-screen w-screen p-8' onBottomReached={loadMoreWorks}>
+<InfiniteScrollArea className='h-screen w-screen p-8 pt-16 rounded-xl' onBottomReached={loadMoreWorks}>
   <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
     <div className='flex flex-col gap-4 w-full'>
       {Array.isArray(works) && works.filter((_, index) => index % 3 === 0).map((work: any) => (

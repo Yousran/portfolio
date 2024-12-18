@@ -9,7 +9,8 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+} from "@/components/ui/context-menu";
+import Navbar from "@/components/ui/navbar";
 
 const Page = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -29,6 +30,7 @@ const Page = () => {
             starColor={[255, 255, 255]}
             speedFactor={0.03}
           />
+          <Navbar title='Works' />
           <Works showHidden={showHidden} />
         </div>
       </ContextMenuTrigger>
