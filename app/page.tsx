@@ -22,8 +22,8 @@ export default function Home() {
   );
 }
 
-//TODO: api input validation
-
-//TODO: masonry grid orders
 //TODO: change file upload name when success sonner when failed
+
+//TODO: api input validation
 //TODO: file upload component
+//TODO: show work, experience, education details as modal
