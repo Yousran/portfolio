@@ -17,7 +17,7 @@ const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, 
         try {
             const response = await fetch(fetchItemsEndpoint);
             const data = await response.json();
-            setItems(data);
+            setItems(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Failed to fetch:', error);
         }
