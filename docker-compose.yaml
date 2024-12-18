@@ -5,6 +5,9 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      ADMIN_USERNAME: yourusername
+      ADMIN_PASSWORD: yourpassword
+      JWT_SECRET: yourjwtsecret
 
   nginx:
     image: nginx:latest

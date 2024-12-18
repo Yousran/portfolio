@@ -19,7 +19,7 @@ export default function Navbar({ title }: NavbarProps) {
     <nav className="absolute top-0 z-50 w-full p-4 bg-transparent flex justify-between items-center">
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.2, ease: "easeInOut" }}>
               <Button
                 variant="ghost"

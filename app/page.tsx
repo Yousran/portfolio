@@ -22,6 +22,5 @@ export default function Home() {
   );
 }
 
-//TODO: authenticate and authorize user
 //TODO: urutan work item di masonry grid
 //TODO: education dan experience section

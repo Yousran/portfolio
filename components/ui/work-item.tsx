@@ -20,9 +20,10 @@ interface WorkItemProps {
     show: boolean;
   };
   showHidden: boolean;
+  isLoggedIn: boolean;
 }
 
-const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden }) => {
+const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(work.show);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -64,37 +65,63 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden }) => {
 
   return (
     <>
-      <ContextMenu>
-        <ContextMenuTrigger>
-          <div 
-            key={work.id} 
-            className={`relative h-fit cursor-pointer rounded-xl overflow-hidden ${!isVisible ? 'opacity-30' : ''}`} 
-            onClick={handleClick}
-          >
-            {work.File && (
-              <>
-                <img 
-                  src={work.File.tiny_path} 
-                  className={`w-full h-auto ${isLoaded ? 'hidden' : 'blur-sm'} transition-opacity`} 
-                  alt={work.File.original_name} 
-                />
-                <img 
-                  src={work.File.path} 
-                  className={`w-full h-auto ${isLoaded ? 'block' : 'hidden'}`} 
-                  alt={work.File.original_name} 
-                />
-                <div className='absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex items-center justify-center rounded-lg transition-opacity'>
-                  <span className='text-primary-foreground dark:text-primary text-lg'>{work.title}</span>
-                </div>
-              </>
-            )}
-          </div>
-        </ContextMenuTrigger>
-        <ContextMenuContent>
-          <ContextMenuItem onSelect={() => handleEdit(work)}>Edit</ContextMenuItem>
-          <ContextMenuItem onSelect={() => handleHideShow(work)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
-        </ContextMenuContent>
-      </ContextMenu>
+      {isLoggedIn ? (
+        <ContextMenu>
+          <ContextMenuTrigger>
+            <div 
+              key={work.id} 
+              className={`relative h-fit cursor-pointer rounded-xl overflow-hidden ${!isVisible ? 'opacity-30' : ''}`} 
+              onClick={handleClick}
+            >
+              {work.File && (
+                <>
+                  <img 
+                    src={work.File.tiny_path} 
+                    className={`w-full h-auto ${isLoaded ? 'hidden' : 'blur-sm'} transition-opacity`} 
+                    alt={work.File.original_name} 
+                  />
+                  <img 
+                    src={work.File.path} 
+                    className={`w-full h-auto ${isLoaded ? 'block' : 'hidden'}`} 
+                    alt={work.File.original_name} 
+                  />
+                  <div className='absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex items-center justify-center rounded-lg transition-opacity'>
+                    <span className='text-primary-foreground dark:text-primary text-lg'>{work.title}</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </ContextMenuTrigger>
+          <ContextMenuContent>
+            <ContextMenuItem onSelect={() => handleEdit(work)}>Edit</ContextMenuItem>
+            <ContextMenuItem onSelect={() => handleHideShow(work)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
+      ) : (
+        <div 
+          key={work.id} 
+          className={`relative h-fit cursor-pointer rounded-xl overflow-hidden ${!isVisible ? 'opacity-30' : ''}`} 
+          onClick={handleClick}
+        >
+          {work.File && (
+            <>
+              <img 
+                src={work.File.tiny_path} 
+                className={`w-full h-auto ${isLoaded ? 'hidden' : 'blur-sm'} transition-opacity`} 
+                alt={work.File.original_name} 
+              />
+              <img 
+                src={work.File.path} 
+                className={`w-full h-auto ${isLoaded ? 'block' : 'hidden'}`} 
+                alt={work.File.original_name} 
+              />
+              <div className='absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex items-center justify-center rounded-lg transition-opacity'>
+                <span className='text-primary-foreground dark:text-primary text-lg'>{work.title}</span>
+              </div>
+            </>
+          )}
+        </div>
+      )}
       <EditWorks open={isEditOpen} onOpenChange={setIsEditOpen} work={work} />
     </>
   );
