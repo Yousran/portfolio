@@ -18,7 +18,6 @@ import {
     AlertDialogHeader, 
     AlertDialogFooter, 
     AlertDialogCancel, 
-    AlertDialogAction, 
     AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { Toaster } from '@/components/ui/sonner';
@@ -218,7 +217,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDelete(item)}>Delete</AlertDialogAction>
+                        <Button variant={'destructive'} onClick={() => handleDelete(item)}>Delete</Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

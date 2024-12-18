@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { 
   ContextMenu, 
   ContextMenuTrigger, 
@@ -12,7 +13,6 @@ import {
   AlertDialogHeader, 
   AlertDialogFooter, 
   AlertDialogCancel, 
-  AlertDialogAction, 
   AlertDialogTitle, 
   AlertDialogDescription
 } from '@/components/ui/alert-dialog';
@@ -165,7 +165,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => handleDelete(work)}>Delete</AlertDialogAction>
+            <Button variant={'destructive'} onClick={() => handleDelete(work)}>Cancel</Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
