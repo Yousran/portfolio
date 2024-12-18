@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Timeline from './experiences';
+import Timeline from '@/components/ui/timeline';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
 import Starfield from 'react-starfield';
 import Navbar from '@/components/ui/navbar';
@@ -49,7 +49,13 @@ const Page = () => {
                         speedFactor={0.03}
                     />
                     <Navbar title='Experiences' />
-                    <Timeline showHidden={showHidden} isLoggedIn={isLoggedIn} />
+                    <Timeline
+                        showHidden={showHidden}
+                        isLoggedIn={isLoggedIn}
+                        fetchItemsEndpoint="/api/experiences"
+                        updateEndpoint="/api/experiences/update"
+                        updateShowEndpoint="/api/experiences/update-show"
+                    />
                 </div>
             </ContextMenuTrigger>
             {isLoggedIn && (
