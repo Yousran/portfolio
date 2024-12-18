@@ -8,9 +8,10 @@ interface TimelineProps {
     fetchItemsEndpoint: string;
     updateEndpoint: string;
     updateShowEndpoint: string;
+    deleteEndpoint: string;
 }
 
-const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, updateShowEndpoint }: TimelineProps) => {
+const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, updateShowEndpoint, deleteEndpoint }: TimelineProps) => {
     const [items, setItems] = useState<any[]>([]);
 
     const fetchItems = async () => {
@@ -38,6 +39,7 @@ const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, 
                                 item={item} 
                                 showHidden={showHidden} 
                                 isLoggedIn={isLoggedIn}
+                                deleteEndpoint={deleteEndpoint}
                                 updateEndpoint={updateEndpoint}
                                 updateShowEndpoint={updateShowEndpoint} 
                             />

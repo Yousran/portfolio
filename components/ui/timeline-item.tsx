@@ -11,6 +11,17 @@ import {
 } from "@/components/ui/context-menu";
 import { format } from 'date-fns';
 import EditTimelineItem from '@/components/ui/edit-timeline-item';
+import { 
+    AlertDialog, 
+    AlertDialogTrigger, 
+    AlertDialogContent, 
+    AlertDialogHeader, 
+    AlertDialogFooter, 
+    AlertDialogCancel, 
+    AlertDialogAction, 
+    AlertDialogTitle
+} from '@/components/ui/alert-dialog';
+
 
 interface ItemProps {
     item: {
@@ -28,14 +39,16 @@ interface ItemProps {
     };
     updateEndpoint: string;
     updateShowEndpoint: string;
+    deleteEndpoint: string;
     showHidden: boolean;
     isLoggedIn: boolean;
 }
 
-const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updateEndpoint, updateShowEndpoint }) => {
+const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updateEndpoint, updateShowEndpoint, deleteEndpoint }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isVisible, setIsVisible] = useState(item.show);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const handleClick = () => {
         window.open(item.link, '_blank');
@@ -59,6 +72,18 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
             setIsVisible(newVisibility);
         } else {
             console.error('Failed to update show status:', await response.text());
+        }
+    };
+
+    const handleDelete = async (item: ItemProps['item']) => {
+        const response = await fetch(`${deleteEndpoint}?id=${item.id}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            console.error('Failed to delete item:', await response.text());
         }
     };
 
@@ -118,6 +143,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                     <ContextMenuContent>
                         <ContextMenuItem onSelect={() => handleEdit(item)}>Edit</ContextMenuItem>
                         <ContextMenuItem onSelect={() => handleHideShow(item)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
+                        <ContextMenuItem onSelect={() => setIsAlertOpen(true)}>Delete</ContextMenuItem>
                     </ContextMenuContent>
                 </ContextMenu>
             ) : (
@@ -169,6 +195,17 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                     link: "Experience Link"
                 }}
             />
+            <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure you want to delete this item?</AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleDelete(item)}>Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     );
 };

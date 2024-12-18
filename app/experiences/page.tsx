@@ -53,6 +53,7 @@ const Page = () => {
                         fetchItemsEndpoint="/api/experiences"
                         updateEndpoint="/api/experiences/update"
                         updateShowEndpoint="/api/experiences/update-show"
+                        deleteEndpoint="/api/experiences/destroy"
                     />
                 </div>
             </ContextMenuTrigger>

@@ -6,6 +6,16 @@ import {
   ContextMenuItem 
 } from './context-menu';
 import EditWorks from '@/app/works/edit-works';
+import { 
+  AlertDialog, 
+  AlertDialogTrigger, 
+  AlertDialogContent, 
+  AlertDialogHeader, 
+  AlertDialogFooter, 
+  AlertDialogCancel, 
+  AlertDialogAction, 
+  AlertDialogTitle 
+} from '@/components/ui/alert-dialog';
 
 interface WorkItemProps {
   work: {
@@ -27,6 +37,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
   const [isLoaded, setIsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(work.show);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleClick = () => {
     window.open(work.link, '_blank');
@@ -50,6 +61,18 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
       setIsVisible(newVisibility);
     } else {
       console.error('Failed to update show status:', await response.text());
+    }
+  };
+
+  const handleDelete = async (work: WorkItemProps['work']) => {
+    const response = await fetch(`/api/works/destroy?id=${work.id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error('Failed to delete work:', await response.text());
     }
   };
 
@@ -95,6 +118,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
           <ContextMenuContent>
             <ContextMenuItem onSelect={() => handleEdit(work)}>Edit</ContextMenuItem>
             <ContextMenuItem onSelect={() => handleHideShow(work)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
+            <ContextMenuItem onSelect={() => setIsAlertOpen(true)}>Delete</ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>
       ) : (
@@ -123,6 +147,17 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
         </div>
       )}
       <EditWorks open={isEditOpen} onOpenChange={setIsEditOpen} work={work} />
+      <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to delete this work?</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => handleDelete(work)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
