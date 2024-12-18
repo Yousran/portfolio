@@ -5,6 +5,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      APP_URL: http://localhost:3000
       ADMIN_USERNAME: yourusername
       ADMIN_PASSWORD: yourpassword
       JWT_SECRET: yourjwtsecret

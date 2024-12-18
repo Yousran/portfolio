@@ -16,6 +16,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Yousranmz",
   description: "Yousranmz's portfolio",
+  manifest: '/site.webmanifest',
+  category: 'technology',
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Yousranmz Portfolio',
+    description: 'Explore the portfolio of Yousranmz, showcasing projects and skills.',
+    images: [`${process.env.APP_URL || 'http://localhost:3000'}/android-chrome-512x512.png`], // Must be an absolute URL
+  },
 };
 
 export default function RootLayout({

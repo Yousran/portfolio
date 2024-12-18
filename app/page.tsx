@@ -22,8 +22,8 @@ export default function Home() {
   );
 }
 
-//TODO: change file upload name when success sonner when failed
 
+//TODO: change file upload name when success sonner when failed
+//TODO: file upload component using https://www.npmjs.com/package/shadcn-dropzone
 //TODO: api input validation
-//TODO: file upload component
 //TODO: show work, experience, education details as modal
