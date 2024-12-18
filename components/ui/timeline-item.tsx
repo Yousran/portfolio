@@ -64,6 +64,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({ show: newVisibility }),
         });
@@ -78,6 +79,9 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
     const handleDelete = async (item: ItemProps['item']) => {
         const response = await fetch(`${deleteEndpoint}?id=${item.id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
         });
 
         if (response.ok) {

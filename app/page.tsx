@@ -22,9 +22,9 @@ export default function Home() {
   );
 }
 
-//TODO: api authorization
 //TODO: view error handling
 //TODO: api input validation
+
 //TODO: masonry grid orders
 //TODO: change file upload name when success sonner when failed
 //TODO: file upload component

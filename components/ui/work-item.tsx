@@ -53,6 +53,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({ show: newVisibility }),
     });
@@ -67,6 +68,9 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
   const handleDelete = async (work: WorkItemProps['work']) => {
     const response = await fetch(`/api/works/destroy?id=${work.id}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
     });
 
     if (response.ok) {

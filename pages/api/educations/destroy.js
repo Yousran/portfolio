@@ -1,10 +1,12 @@
 import Education from '../../../models/education.js';
 import File from '../../../models/file.js';
+import authMiddleware from '../authMiddleware.js';
 import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
     if (req.method === 'DELETE') {
+        authMiddleware(req, res, async () => {
         const { id } = req.query;
 
         try {
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
             console.error('Error deleting education:', error);
             res.status(500).json({ error: 'Failed to delete education' });
         }
+    });
     } else {
         res.status(405).json({ error: 'Method not allowed' });
     }

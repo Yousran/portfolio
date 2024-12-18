@@ -1,7 +1,9 @@
 import Experience from '../../../models/experience.js';
+import authMiddleware from '../authMiddleware.js';
 
 export default async function handler(req, res) {
     if (req.method === 'PUT') {
+        authMiddleware(req, res, async () => {
         const { id } = req.query;
         const { date, title, description, picture, link } = req.body;
 
@@ -24,6 +26,7 @@ export default async function handler(req, res) {
             console.error('Error updating experience:', error);
             res.status(500).json({ error: 'Failed to update experience' });
         }
+    });
     } else {
         res.status(405).json({ error: 'Method not allowed' });
     }

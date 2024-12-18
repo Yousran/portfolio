@@ -49,18 +49,17 @@ const CreateWorks = ({ open, onOpenChange }: { open: boolean; onOpenChange: (ope
     e.preventDefault();
 
     const requestBody = { title, description, picture, link };
-    // console.log('Submitting form with data:', requestBody);
 
     const response = await fetch('/api/works/store', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(requestBody),
     });
 
     if (response.ok) {
-      // console.log('Form submitted successfully');
       setTitle('');
       setDescription('');
       setPicture('');
