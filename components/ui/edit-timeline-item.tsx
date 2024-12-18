@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { 
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
 import {
     AlertDialog,
     AlertDialogCancel,
@@ -30,11 +37,12 @@ interface EditTimelineItemProps {
 }
 
 const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTimelineItemProps) => {
-    const [date, setDate] = useState(item.date);
+    const [date, setDate] = useState<Date | null>(new Date(item.date));
     const [title, setTitle] = useState(item.title);
     const [description, setDescription] = useState(item.description);
     const [picture, setPicture] = useState('');
     const [link, setLink] = useState(item.link);
+    const [popoverOpen, setPopoverOpen] = useState(false);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -60,7 +68,8 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const requestBody = { date, title, description, picture, link };
+        const formattedDate = date ? format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx") : null;
+        const requestBody = { date: formattedDate, title, description, picture, link };
 
         const response = await fetch(`${endpoint}?id=${item.id}`, {
             method: 'PUT',
@@ -72,7 +81,7 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
         });
 
         if (response.ok) {
-            setDate('');
+            setDate(null);
             setTitle('');
             setDescription('');
             setPicture('');
@@ -84,6 +93,11 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
             toast.error(error.error);
             // console.error('Failed to update item:', await response.text());
         }
+    };
+
+    const handleDateSelect = (day: Date) => {
+        setDate(day);
+        setPopoverOpen(false);
     };
 
     return (
@@ -99,7 +113,25 @@ const EditTimelineItem = ({ open, onOpenChange, item, endpoint, labels }: EditTi
                     <div className="space-y-4">
                         <div>
                             <Label htmlFor="date">{labels.date}</Label>
-                            <Input id="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+                            <Popover open={popoverOpen} onOpenChange={setPopoverOpen} modal>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant={"outline"}
+                                        className={`w-full justify-start text-left font-normal ${!date ? "text-muted-foreground" : ""}`}
+                                    >
+                                        <i className='bx bx-calendar mr-2 h-4 w-4'></i>
+                                        {date ? format(date, "dd-MMM-yyyy") : <span>Pick a date</span>}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0 z-50">
+                                    <Calendar
+                                        mode="single"
+                                        selected={date || undefined}
+                                        onSelect={(day) => day && handleDateSelect(day)}
+                                        initialFocus
+                                    />
+                                </PopoverContent>
+                            </Popover>
                         </div>
                         <div>
                             <Label htmlFor="title">{labels.title}</Label>
