@@ -4,7 +4,7 @@ import Timeline from '@/components/ui/timeline';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
 import Starfield from 'react-starfield';
 import Navbar from '@/components/ui/navbar';
-import CreateExperience from './create-experience';
+import CreateEducation from './create-education';
 
 const Page = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -46,23 +46,23 @@ const Page = () => {
                         starColor={[255, 255, 255]}
                         speedFactor={0.03}
                     />
-                    <Navbar title='Experiences' />
+                    <Navbar title='Educations' />
                     <Timeline
                         showHidden={showHidden}
                         isLoggedIn={isLoggedIn}
-                        fetchItemsEndpoint="/api/experiences"
-                        updateEndpoint="/api/experiences/update"
-                        updateShowEndpoint="/api/experiences/update-show"
+                        fetchItemsEndpoint="/api/educations"
+                        updateEndpoint="/api/educations/update"
+                        updateShowEndpoint="/api/educations/update-show"
                     />
                 </div>
             </ContextMenuTrigger>
             {isLoggedIn && (
                 <ContextMenuContent>
-                    <ContextMenuItem onClick={handleOpenDialog}>Add Experience</ContextMenuItem>
+                    <ContextMenuItem onClick={handleOpenDialog}>Add Education</ContextMenuItem>
                     <ContextMenuItem onClick={toggleShowHidden}>{showHidden ? 'Hide Hidden' : 'Show Hidden'}</ContextMenuItem>
                 </ContextMenuContent>
             )}
-            <CreateExperience open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+            <CreateEducation open={isDialogOpen} onOpenChange={setIsDialogOpen} />
         </ContextMenu>
     );
 };

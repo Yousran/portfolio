@@ -22,7 +22,6 @@ export default function Home() {
   );
 }
 
-//TODO: education section
 //TODO: delete work
 //TODO: delete experience, dan education
 //TODO: urutan work item di masonry grid
