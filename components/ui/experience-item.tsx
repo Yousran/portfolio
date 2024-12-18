@@ -9,6 +9,7 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { format } from 'date-fns';
 import EditExperience from '@/app/experiences/edit-experience';
 
 interface ExperienceItemProps {
@@ -77,7 +78,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ item, showHidden, isLog
             {isLoggedIn ? (
                 <ContextMenu>
                     <li
-                        className={`mb-10 ml-4 hover:opacity-50 ${!isVisible ? 'opacity-30' : ''}`}
+                        className={`mb-10 ml-4 hover:bg-secondary rounded-lg p-1 ${!isVisible ? 'opacity-30' : ''}`}
                     >
                         <ContextMenuTrigger>
                             <div className="absolute w-3 h-3 rounded-full mt-8 -left-1.5 bg-primary"></div>
@@ -98,7 +99,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ item, showHidden, isLog
                                         </>
                                     )}
                                     <div>
-                                        <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{item.date}</time>
+                                        <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(item.date, "dd-MMM-yyyy")}</time>
                                         <h3 className="text-lg font-semibold text-primary overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
                                         <p className="mb-4 text-base font-normal text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>{item.description}</p>
                                         {item.link && (
@@ -139,7 +140,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({ item, showHidden, isLog
                                 </>
                             )}
                             <div>
-                                <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{item.date}</time>
+                                <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-400">{format(item.date, "dd-MMM-yyyy")}</time>
                                 <h3 className="text-lg font-semibold text-primary overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
                                 <p className="mb-4 text-base font-normal text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>{item.description}</p>
                                 {item.link && (

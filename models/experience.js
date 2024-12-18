@@ -5,7 +5,7 @@ import File from './file.js';
 class Experience extends Model {}
 
 Experience.init({
-  date: DataTypes.STRING,
+  date: DataTypes.DATE,
   title: DataTypes.STRING,
   description: DataTypes.STRING,
   picture: {

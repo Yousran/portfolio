@@ -9,7 +9,7 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.INTEGER
     },
     date: {
-      type: Sequelize.STRING
+      type: Sequelize.DATE
     },
     title: {
       type: Sequelize.STRING

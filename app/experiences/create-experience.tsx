@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { 
     Popover,
@@ -53,7 +52,7 @@ const CreateExperience = ({ open, onOpenChange }: { open: boolean; onOpenChange:
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formattedDate = date ? format(date, "dd-MMM-yyyy") : '';
+        const formattedDate = date ? format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx") : null;
         const requestBody: any = { date: formattedDate, title, description };
 
         if (picture) {
@@ -84,10 +83,8 @@ const CreateExperience = ({ open, onOpenChange }: { open: boolean; onOpenChange:
         }
     };
 
-    const handleDateSelect = (selectedDate: Date | undefined) => {
-        if (selectedDate) {
-            setDate(selectedDate);
-        }
+    const handleDateSelect = (day: Date) => {
+        setDate(day);
         setPopoverOpen(false);
     };
 
@@ -108,7 +105,7 @@ const CreateExperience = ({ open, onOpenChange }: { open: boolean; onOpenChange:
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant={"outline"}
-                                        className={`w-[280px] justify-start text-left font-normal ${!date ? "text-muted-foreground" : ""}`}
+                                        className={`w-full justify-start text-left font-normal ${!date ? "text-muted-foreground" : ""}`}
                                     >
                                         <i className='bx bx-calendar mr-2 h-4 w-4'></i>
                                         {date ? format(date, "dd-MMM-yyyy") : <span>Pick a date</span>}
@@ -118,7 +115,7 @@ const CreateExperience = ({ open, onOpenChange }: { open: boolean; onOpenChange:
                                     <Calendar
                                         mode="single"
                                         selected={date || undefined}
-                                        onSelect={(day) => handleDateSelect(day)}
+                                        onSelect={(day) => day && handleDateSelect(day)}
                                         initialFocus
                                     />
                                 </PopoverContent>
