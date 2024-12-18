@@ -2,6 +2,8 @@
 import bcrypt from 'bcrypt';
 
 export async function up(queryInterface, Sequelize) {
+  console.log('Creating admin user');
+  console.log('Username: ', process.env.ADMIN_USERNAME);
   const username = process.env.ADMIN_USERNAME || 'defaultUsername';
   const password = process.env.ADMIN_PASSWORD || 'defaultPassword';
   const hashedPassword = await bcrypt.hash(password, 10);
