@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -104,6 +104,7 @@ const EditWorks = ({ open, onOpenChange, work }: { open: boolean; onOpenChange: 
           </AlertDialogFooter>
         </form>
       </AlertDialogContent>
+      <Toaster position='bottom-right'/>
     </AlertDialog>
   );
 };

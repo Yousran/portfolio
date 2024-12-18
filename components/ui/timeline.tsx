@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import TimelineItem from '@/components/ui/timeline-item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -14,7 +14,7 @@ interface TimelineProps {
 const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, updateShowEndpoint, deleteEndpoint }: TimelineProps) => {
     const [items, setItems] = useState<any[]>([]);
 
-    const fetchItems = async () => {
+    const fetchItems = useCallback(async () => {
         try {
             const response = await fetch(fetchItemsEndpoint);
             const data = await response.json();
@@ -22,11 +22,11 @@ const Timeline = ({ showHidden, isLoggedIn, fetchItemsEndpoint, updateEndpoint, 
         } catch (error) {
             console.error('Failed to fetch:', error);
         }
-    };
+    }, [fetchItemsEndpoint]);
 
     useEffect(() => {
         fetchItems();
-    }, [fetchItemsEndpoint]);
+    }, [fetchItems]);
 
     return (
         <ScrollArea className='h-screen w-screen p-8 pt-16'>

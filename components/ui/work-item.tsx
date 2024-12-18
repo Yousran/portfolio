@@ -45,7 +45,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
     window.open(work.link, '_blank');
   };
 
-  const handleEdit = (work: WorkItemProps['work']) => {
+  const handleEdit = () => {
     setIsEditOpen(true);
   };
 
@@ -126,7 +126,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ work, showHidden, isLoggedIn }) => 
             </div>
           </ContextMenuTrigger>
           <ContextMenuContent>
-            <ContextMenuItem onSelect={() => handleEdit(work)}>Edit</ContextMenuItem>
+            <ContextMenuItem onSelect={() => handleEdit()}>Edit</ContextMenuItem>
             <ContextMenuItem onSelect={() => handleHideShow(work)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
             <ContextMenuItem onSelect={() => setIsAlertOpen(true)}>Delete</ContextMenuItem>
           </ContextMenuContent>

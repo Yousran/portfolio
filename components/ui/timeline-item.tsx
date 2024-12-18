@@ -55,7 +55,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
         window.open(item.link, '_blank');
     };
 
-    const handleEdit = (item: ItemProps['item']) => {
+    const handleEdit = () => {
         setIsEditOpen(true);
     };
 
@@ -152,7 +152,7 @@ const TimelineItem: React.FC<ItemProps> = ({ item, showHidden, isLoggedIn, updat
                         </ContextMenuTrigger>
                     </li>
                     <ContextMenuContent>
-                        <ContextMenuItem onSelect={() => handleEdit(item)}>Edit</ContextMenuItem>
+                        <ContextMenuItem onSelect={() => handleEdit()}>Edit</ContextMenuItem>
                         <ContextMenuItem onSelect={() => handleHideShow(item)}>{isVisible ? 'Hide' : 'Show'}</ContextMenuItem>
                         <ContextMenuItem onSelect={() => setIsAlertOpen(true)}>Delete</ContextMenuItem>
                     </ContextMenuContent>

@@ -10,6 +10,7 @@ export default async function handler(req, res) {
       const newWork = await Work.create({ title, description, picture, link });
       res.status(201).json(newWork);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: 'Failed to create work' });
     }
   });
