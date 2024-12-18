@@ -10,11 +10,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --force
 
-# Jalankan migrasi dan seed
-RUN npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all
-
 # Salin semua file ke working directory
 COPY . .
+
+# Jalankan migrasi dan seed
+RUN npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all
 
 # Build aplikasi Next.js
 RUN npm run build
