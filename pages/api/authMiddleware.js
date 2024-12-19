@@ -4,12 +4,16 @@ import User from '../../models/user.js';
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
+  const jwtsecret = process.env.JWT_SECRET || 'your_jwt_secret';
+
+  //TODO: Remove this console.log
+  console.log('AUTH MIDDLEWARE USING JWT SECRET: ', jwtsecret);
 
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }
   console.log('Token : ',token);
-  jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret', (err, decoded) => {
+  jwt.verify(token, jwtsecret, (err, decoded) => {
     if (err) {
       console.log(err);
       return res.status(401).json({ error: 'Failed to authenticate token' });

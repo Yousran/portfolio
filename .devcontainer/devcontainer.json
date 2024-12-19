@@ -1,0 +1,22 @@
+{
+    "name": "Yousranmz Portfolio Development Container",
+    "dockerComposeFile": "../docker-compose.yaml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "cweijan.vscode-database-client2",
+                "cweijan.dbclient-jdbc",
+                "bradlc.vscode-tailwindcss",
+                "zhuangtongfa.material-theme",
+                "PKief.material-icon-theme"
+            ],
+            "settings": {
+                "workbench.colorTheme": "One Dark Pro"
+            }
+        }
+    }
+  }

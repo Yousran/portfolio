@@ -22,6 +22,7 @@ export default function Home() {
   );
 }
 
+//TODO: environtent not working
 
 //TODO: change file upload name when success sonner when failed
 //TODO: file upload component using https://www.npmjs.com/package/shadcn-dropzone
