@@ -48,8 +48,8 @@ const handler = async (req, res) => {
 
     try {
       const newFile = await File.create({
-        path: filePath,
-        tiny_path: tinyFilePath,
+        path: '/api/'+filePath,
+        tiny_path: '/api/'+tinyFilePath,
         original_name: originalname,
       });
 

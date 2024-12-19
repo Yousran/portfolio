@@ -6,9 +6,9 @@ services:
     environment:
       NODE_ENV: production
       APP_URL: http://localhost:3000
-      ADMIN_USERNAME: yourusername
-      ADMIN_PASSWORD: yourpassword
-      JWT_SECRET: yourjwtsecret
+      ADMIN_USERNAME: myusername
+      ADMIN_PASSWORD: mypassword
+      JWT_SECRET: rahasia
 
   nginx:
     image: nginx:latest
