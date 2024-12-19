@@ -30,17 +30,17 @@ const Works = ({ showHidden, isLoggedIn }: { showHidden: boolean, isLoggedIn: bo
   return (
     <InfiniteScrollArea className='h-screen w-screen p-8 pt-16 rounded-xl' onBottomReached={loadMoreWorks}>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
-        <div className='flex flex-col gap-4 sm:gap-2 w-fit'>
+        <div className='flex flex-col w-full gap-4 sm:gap-2'>
           {Array.isArray(works) && works.filter((_, index) => index % 3 === 0).map((work: any) => (
             <WorkItem key={work.id} work={work} showHidden={showHidden} isLoggedIn={isLoggedIn} />
           ))}
         </div>
-        <div className='flex flex-col gap-4 sm:gap-2 w-fit'>
+        <div className='flex flex-col w-full gap-4 sm:gap-2'>
           {Array.isArray(works) && works.filter((_, index) => index % 3 === 1).map((work: any) => (
             <WorkItem key={work.id} work={work} showHidden={showHidden} isLoggedIn={isLoggedIn} />
           ))}
         </div>
-        <div className='flex flex-col gap-4 sm:gap-2 w-fit'>
+        <div className='flex flex-col w-full gap-4 sm:gap-2'>
           {Array.isArray(works) && works.filter((_, index) => index % 3 === 2).map((work: any) => (
             <WorkItem key={work.id} work={work} showHidden={showHidden} isLoggedIn={isLoggedIn} />
           ))}
