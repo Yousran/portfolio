@@ -17,7 +17,7 @@ COPY . .
 RUN npx sequelize-cli db:migrate
 
 # Jalankan seed
-RUN npx sequelize-cli db:seed:all
+# RUN npx sequelize-cli db:seed:all
 
 # Build aplikasi Next.js
 RUN npm run build
