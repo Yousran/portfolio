@@ -9,6 +9,8 @@ services:
       ADMIN_USERNAME: myusername
       ADMIN_PASSWORD: mypassword
       JWT_SECRET: rahasia
+    volumes:
+      - .:/app
 
   nginx:
     image: nginx:latest
