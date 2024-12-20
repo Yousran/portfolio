@@ -22,6 +22,11 @@ export default function Home() {
   );
 }
 
+//TODO: Using tailwind Column in masonry layout
+//TODO: SEO Twitter Image
+//TODO: Optional Work Description and Link
+//TODO: Image Upload No limit size
+//TODO: disable rendering context when not logged in
 //TODO: tiny image rotated
 //TODO: change file upload name when success sonner when failed
 //TODO: file upload component using https://www.npmjs.com/package/shadcn-dropzone
